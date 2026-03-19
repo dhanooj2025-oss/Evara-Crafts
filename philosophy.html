@@ -1,0 +1,575 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosophy | Evara Crafts</title>
+    <meta name="description"
+        content="Our beliefs, values, and the artistic mindset behind every Evara Crafts creation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Editorial & Philosophy Specific Refinements */
+
+        :root {
+            --deco-text-color: rgba(198, 165, 106, 0.12);
+            /* Darker, more visible gold */
+        }
+
+        .section-padding {
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Watermarks */
+        .deco-text {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-heading);
+            font-size: 10rem;
+            color: var(--deco-text-color);
+            z-index: 0;
+            white-space: nowrap;
+            pointer-events: none;
+            line-height: 0.8;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            opacity: 1;
+            /* Subtle shadow to lift it */
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 1024px) {
+            .deco-text {
+                font-size: 6rem;
+                top: 2%;
+            }
+        }
+
+        /* Content Z-Index Fix */
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Core Beliefs Grid */
+        .beliefs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            /* Reduced top margin */
+            text-align: center;
+        }
+
+        .belief-card {
+            padding: 2.5rem 2rem;
+            background: #fff;
+            border-radius: 4px;
+            /* Soft deep shadow for lift */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .belief-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(198, 165, 106, 0.15);
+            /* Gold-tinted shadow */
+            border-color: rgba(198, 165, 106, 0.2);
+        }
+
+        .belief-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .belief-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .belief-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: transform 0.4s ease;
+        }
+
+        .belief-card:hover .belief-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .belief-title {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .belief-text {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Editorial Split Improvements */
+        .editorial-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            /* Tighter gap */
+            align-items: center;
+            margin: 2rem 0;
+            /* Reduced margins */
+        }
+
+        .editorial-img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* subtle soft shadow */
+            margin-bottom: 0px;
+        }
+
+        .editorial-content {
+            padding: 1rem;
+        }
+
+        .editorial-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 16px;
+        }
+        
+        .quote-large {
+            margin: 32px 0;
+            font-size: 1.8rem;
+            font-family: var(--font-heading);
+            font-style: italic;
+        }
+
+        /* Alternating Sections */
+        .bg-warm {
+            background-color: #faf9f6;
+        }
+
+        .bg-white {
+            background-color: #ffffff;
+        }
+
+        /* Manifesto Section refined */
+        .manifesto-section {
+            background-color: var(--text-color);
+            /* Dark for contrast */
+            padding: 6rem 0;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .manifesto-text {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.3;
+            color: #fff;
+            /* White text */
+            max-width: 800px;
+            margin: 0 auto;
+            letter-spacing: 0.02em;
+        }
+
+        /* Compact Final CTA */
+        .final-cta {
+            padding: 4rem 0;
+            /* Reduced from 6rem */
+            background-color: #f4f1ea;
+            /* Champagne tint */
+        }
+
+        .big-statement {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .section-padding {
+                padding: 80px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .editorial-split {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .editorial-img {
+                height: 350px;
+            }
+
+            .section-padding {
+                padding: 60px 0 !important;
+            }
+        }
+
+        /* Philosophy Hero Redesign */
+        .philosophy-hero-section {
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 140px;
+            padding-bottom: 120px;
+            overflow: hidden;
+            background-image: url('https://i.postimg.cc/7L1nShHj/Chat-GPT-Image-Mar-18-2026-11-16-56-PM.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .philosophy-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+
+        .philosophy-hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .philosophy-hero-title {
+            font-family: var(--font-heading);
+            font-size: 56px;
+            line-height: 1.2;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.02em;
+        }
+
+        .philosophy-hero-text {
+            font-size: 19px;
+            max-width: 650px;
+            opacity: 0.95;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-weight: 400;
+        }
+
+        .philosophy-hero-btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .philosophy-hero-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Final CTA Custom Background for Philosophy Page */
+        .final-cta .cta-parallax-bg {
+            background-image: url('assets/philosophy_cta_bg.png') !important;
+        }
+
+        @media (max-width: 768px) {
+            .philosophy-hero-section {
+                height: 60vh;
+                padding-top: 100px;
+                padding-bottom: 80px;
+            }
+            .philosophy-hero-title {
+                font-size: 36px;
+            }
+            .philosophy-hero-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header site-header-light">
+        <div class="logo">
+            <a href="index.html">
+                <img src="logo-new.png" alt="Evara Crafts Logo" class="header-logo">
+                <span class="brand-name">Evara Crafts</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="philosophy.html" class="active"
+                        style="border-bottom: 1px solid currentColor;">Philosophy</a></li>
+                <li><a href="contact.html" class="btn-nav">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero (Artistic Redesign) -->
+        <section class="philosophy-hero-section">
+            <div class="philosophy-hero-overlay"></div>
+            <div class="philosophy-hero-content fade-in-up">
+                <h1 class="philosophy-hero-title">Art with Soul</h1>
+                <p class="philosophy-hero-text">Every piece we create begins with a story.<br>Through careful craftsmanship, thoughtful design, and artistic intention, we transform emotions, memories, and moments into timeless works of art.</p>
+                <a href="#process" class="philosophy-hero-btn">Discover Our Process</a>
+            </div>
+        </section>
+
+        <!-- Core Beliefs -->
+        <section class="section-padding bg-white">
+            <span class="deco-text">VALUES</span>
+            <div class="container">
+                <div class="header-split text-center"
+                    style="justify-content: center; text-align: center; margin-bottom: 1rem;">
+                    <div>
+                        <h2 class="section-title">What We Believe In</h2>
+                    </div>
+                </div>
+
+                <div class="beliefs-grid">
+                    <div class="belief-card fade-in-up">
+                        <span class="belief-icon">✦</span>
+                        <h3 class="belief-title">Art With Soul</h3>
+                        <p class="belief-text">We reject the mass-produced. We believe in creating work that feels
+                            alive, carrying the energy of the hand that made it.</p>
+                    </div>
+                    <div class="belief-card fade-in-up" style="transition-delay: 0.1s;">
+                        <span class="belief-icon">✎</span>
+                        <h3 class="belief-title">Intention in Every Stroke</h3>
+                        <p class="belief-text">Nothing is rushed. We practice patience and mindfulness, ensuring every
+                            detail serves a purpose.</p>
+                    </div>
+                    <div class="belief-card fade-in-up" style="transition-delay: 0.2s;">
+                        <span class="belief-icon">❖</span>
+                        <h3 class="belief-title">Beauty In Imperfection</h3>
+                        <p class="belief-text">We embrace the natural variations of handmade art. It is the slight
+                            irregularity that marks it as human.</p>
+                    </div>
+                    <div class="belief-card fade-in-up" style="transition-delay: 0.3s;">
+                        <span class="belief-icon">♥</span>
+                        <h3 class="belief-title">Crafted For Meaning</h3>
+                        <p class="belief-text">Our work isn't just decoration. It is meant to mark moments, hold
+                            memories, and celebrate connections.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1 — THE CRAFT PROCESS -->
+        <section class="section-padding bg-warm" id="process">
+            <span class="deco-text" style="left: 20%; font-size: 8rem;">PROCESS</span>
+            <div class="container">
+                <div class="editorial-split">
+                    <div class="editorial-image-wrapper fade-in-right">
+                        <img loading="lazy"  src="assets/process_artist_desk.png"
+                            alt="Artist working on handcrafted artwork" class="editorial-img">
+                    </div>
+                    <div class="editorial-content fade-in-up">
+                        <span class="section-label">THE PROCESS</span>
+                        <h2 class="section-title">The Way We Create</h2>
+                        <p class="editorial-text">True craftsmanship cannot be rushed. Each Evare piece begins as a quiet exploration — a conversation between material, imagination, and intention.</p>
+                        <p class="editorial-text">From delicate brushwork to the layering of textures and pigments, every step is guided by patience and attention to detail. We allow the medium to speak, shaping each creation slowly until it finds its final form.</p>
+                        <div class="quote-large">
+                            “To create something timeless, you must refuse to be rushed.”
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 — STORY & MEANING -->
+        <section class="section-padding bg-white">
+            <span class="deco-text" style="left: 80%; font-size: 8rem;">STORY</span>
+            <div class="container">
+                <div class="editorial-split">
+                    <div class="editorial-content fade-in-up">
+                        <span class="section-label">THE STORY</span>
+                        <h2 class="section-title">More Than Objects</h2>
+                        <p class="editorial-text">We believe that art carries meaning beyond what is seen. A portrait holds a memory. A handwritten letter carries a voice. A handcrafted piece becomes a fragment of someone’s story.</p>
+                        <p class="editorial-text">Our goal is not simply to create beautiful objects, but to shape works that hold emotion, preserve moments, and become part of the lives they enter.</p>
+                        <p class="editorial-text">Years from now, what remains is not just the artwork — but the story it carries.</p>
+                    </div>
+                    <div class="editorial-image-wrapper fade-in-right">
+                        <img loading="lazy"  src="assets/story_memories.png"
+                            alt="Framed letter and portrait illustration preserving memory" class="editorial-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 — THE ARTIST -->
+        <section class="section-padding bg-warm" style="padding-top: 140px; padding-bottom: 140px;">
+            <span class="deco-text" style="left: 50%; font-size: 8rem;">ARTIST</span>
+            <div class="container">
+                <div class="editorial-split">
+                    <div class="editorial-image-wrapper fade-in-right">
+                        <img loading="lazy"  src="assets/artist_portrait.png"
+                            alt="Artist in studio holding finished artwork" class="editorial-img">
+                    </div>
+                    <div class="editorial-content fade-in-up">
+                        <span class="section-label">THE ARTIST</span>
+                        <h2 class="section-title">Crafted by Hand, Guided by Heart</h2>
+                        <p class="editorial-text">Behind every Evare creation is a deep love for art and storytelling. Each piece is crafted by hand, guided by intuition, experience, and an appreciation for detail.</p>
+                        <p class="editorial-text">We believe the human touch leaves something irreplaceable in every creation — a quiet presence that machines cannot replicate.</p>
+                        <p class="editorial-text">That presence is what gives every work its soul.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA (Refined Manifesto) -->
+        <section class="final-cta" id="contact">
+            <div class="cta-parallax-bg"></div>
+            <div class="cta-overlay-layers"></div>
+            <div class="container text-center">
+                <div class="cta-content-wrapper">
+                    <h2 class="cta-premium-title fade-in-up">Art that becomes part of your story.</h2>
+                    <p class="cta-subtext-ink fade-in-up">Each creation begins with a conversation and ends as something deeply personal.</p>
+                    <div class="cta-premium-divider"></div>
+                    <a href="create-your-piece.html" class="btn-premium-gold shimmer-btn fade-in-up">BEGIN YOUR PIECE</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+                <!-- Column 1: Brand Info -->
+                <div class="footer-brand-info footer-animate">
+                    <div class="logo-group">
+                        <img src="logo-new.png" alt="Evara Crafts Logo" class="header-logo">
+                        <span class="brand-name">Evara Crafts</span>
+                    </div>
+                    <p class="footer-tagline">Turning emotions into timeless art.</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="footer-links footer-animate">
+                    <h3 class="footer-col-title">EXPLORE</h3>
+                    <ul>
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact Info (NEW) -->
+                <div class="footer-contact-info footer-animate" style="animation-delay: 0.16s;">
+                    <h3 class="footer-col-title">CONTACT</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <span class="contact-text">Bengaluru, Karnataka, India</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <a href="tel:+916282556686" class="contact-text">+91 6282556686</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">✉</span>
+                            <a href="mailto:shaheenaneha3@gmail.com" class="contact-text">shaheenaneha3@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 4: Social -->
+                <div class="footer-social-block footer-animate" style="animation-delay: 0.24s;">
+                    <h3 class="footer-col-title">FOLLOW</h3>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="social-icon-link instagram" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.947.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon-link facebook" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon-link pinterest" aria-label="Pinterest">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.168 0 7.41 2.967 7.41 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.592 0 12.017 0z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/916282556686" target="_blank" rel="noopener noreferrer" class="social-icon-link whatsapp" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-divider footer-animate"></div>
+
+            <div class="footer-bottom footer-animate">
+                <p>&copy; 2026 Evara Crafts. All rights reserved.</p>
+                <p class="designed-love">Designed with love for Evara Crafts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>

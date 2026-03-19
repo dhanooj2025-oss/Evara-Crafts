@@ -1,0 +1,597 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Evara Crafts</title>
+    <meta name="description"
+        content="Start your custom art project with Evara Crafts. Contact us for portraits, gifts, and bespoke designs.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Contact Page Specific Styles */
+
+        /* Cinematic Hero Redesign */
+        .contact-hero-section {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 75vh;
+            padding: 180px 1.5rem 140px;
+            overflow: hidden;
+            background-image: url('https://i.postimg.cc/WzjJww4n/Chat-GPT-Image-Mar-19-2026-12-11-01-AM.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .contact-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.15));
+            z-index: 1;
+        }
+
+        .contact-hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            max-width: 680px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-hero-title {
+            font-family: var(--font-heading);
+            font-size: 56px;
+            line-height: 1.2;
+            font-weight: 500;
+            margin-bottom: 22px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.02em;
+        }
+
+        .contact-hero-text {
+            font-size: 19px;
+            max-width: 650px;
+            opacity: 0.95;
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .contact-hero-section {
+                padding: 120px 1.5rem 100px;
+                min-height: 60vh;
+            }
+            .contact-hero-title {
+                font-size: 36px;
+            }
+            .contact-hero-text {
+                font-size: 16px;
+            }
+        }
+
+        /* Split Layout & Micro Spacing */
+        .contact-split-section {
+            padding-top: 110px;
+            padding-bottom: 110px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .contact-intro {
+            padding-right: 2rem;
+        }
+
+        .contact-intro h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 22px;
+            color: var(--text-color);
+        }
+
+        .contact-intro p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        /* Form Styles Polish */
+        .contact-form-wrapper {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 46px;
+            border-radius: 6px;
+            border: 1px solid #e6e2dd;
+            padding: 10px 14px;
+            font-size: 14px;
+            background: #fff;
+            font-family: var(--font-body);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #c7a97f;
+            box-shadow: 0 0 0 2px rgba(199,169,127,0.15);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            padding: 14px;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23c6a56a%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px top 50%;
+            background-size: 0.8rem auto;
+            padding-right: 2.5rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 48px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 1rem;
+            text-transform: uppercase;
+        }
+
+        .btn-submit:hover {
+            background: #2c2c2c;
+        }
+
+        /* Email + Instagram Boxes */
+        .alt-contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+
+        .contact-card {
+            background: #ffffff;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .contact-card a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-icon-svg {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 1rem;
+        }
+
+        .contact-label {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        /* Process Steps Enhancement */
+        .process-section {
+            background-color: #faf9f6;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            text-align: center;
+        }
+
+        .process-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .process-step {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-num-bg {
+            font-size: 72px;
+            opacity: 0.08;
+            font-weight: 600;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 1;
+            z-index: 1;
+            font-family: var(--font-heading);
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number-actual {
+            display: block;
+            font-size: 14px;
+            letter-spacing: 0.15em;
+            color: #c7a97f;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 200px;
+            margin: 0 auto;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        /* Final CTA Custom Background for Contact Page */
+        .final-cta .cta-parallax-bg {
+            background-image: url('assets/contact_cta_bg.png') !important;
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contact-intro {
+                padding-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header site-header-light">
+        <div class="logo">
+            <a href="index.html">
+                <img src="logo-new.png" alt="Evara Crafts Logo" class="header-logo">
+                <span class="brand-name">Evara Crafts</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="philosophy.html">Philosophy</a></li>
+                <li><a href="contact.html" class="active" style="border-bottom: 1px solid currentColor;">Contact</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero (Cinematic Redesign) -->
+        <section class="contact-hero-section">
+            <div class="contact-hero-overlay"></div>
+            <div class="contact-hero-content fade-in-up" style="transition-delay: 0.1s;">
+                <h1 class="contact-hero-title">Begin Your Story</h1>
+                <p class="contact-hero-text">Whether it is a bespoke portrait, unique wedding stationery, or a timeless custom gift—every meaningful piece begins with a simple outline and a conversation.</p>
+            </div>
+        </section>
+
+        <!-- Main Contact Split -->
+        <section class="contact-split-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <!-- Left: Editorial -->
+                    <div class="contact-intro fade-in-up">
+                        <h2>Bring Your Vision to Life</h2>
+                        <p>We believe that the best art is collaborative. Whether you are looking for a bespoke portrait
+                            to capture a cherished memory, unique wedding stationery that sets the tone for your special
+                            day, or a personalized gift that speaks volumes, we are here to craft it with care.</p>
+                        <p>Our process is personal and thoughtful. Tell us your story, your color palette, or just a
+                            vague idea, and we will guide you through the creative journey.</p>
+
+                        <!-- Alternate Cards -->
+                        <div class="alt-contact-grid">
+                            <div class="contact-card">
+                                <a href="mailto:shaheenaneha3@gmail.com">
+                                    <svg class="contact-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.728L12 16.632l-6.545-4.904v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 8.355l8.073-4.862C21.691 2.279 24 3.434 24 5.457z" fill="#EA4335"/>
+                                        <path d="M16.909 21h3.455C21.268 21 22 20.268 22 19.364V8.545l-5.091 3.818V21z" fill="#34A853"/>
+                                        <path d="M7.091 21H3.636C2.732 21 2 20.268 2 19.364V8.545l5.091 3.818V21z" fill="#4285F4"/>
+                                        <path d="M22 8.545V5.457c0-.904-.732-1.636-1.636-1.636-.453 0-.89.186-1.22.514l-5.091 3.818L22 8.545z" fill="#FBBC05"/>
+                                        <path d="M2 8.545V5.457c0-.904.732-1.636 1.636-1.636.453 0 .89.186 1.22.514l5.091 3.818L2 8.545z" fill="#EA4335"/>
+                                    </svg>
+                                    <span class="contact-label">Email Us</span>
+                                    <span style="font-size: 0.9rem; color: #777;">shaheenaneha3@gmail.com</span>
+                                </a>
+                            </div>
+                            <div class="contact-card">
+                                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer">
+                                    <svg class="contact-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#F58529"></stop>
+                                                <stop offset="30%" stop-color="#DD2A7B"></stop>
+                                                <stop offset="70%" stop-color="#8134AF"></stop>
+                                                <stop offset="100%" stop-color="#515BD4"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <path fill="url(#ig-grad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.947.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                    </svg>
+                                    <span class="contact-label">Instagram</span>
+                                    <span style="font-size: 0.9rem; color: #777;">@evara_crafts_</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Quick Connect -->
+                        <div class="quick-connect-block fade-in-up">
+                            <span class="quick-connect-label">Have a quick question?</span>
+                            <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="quick-connect-link">DM us on Instagram &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Form -->
+                    <div class="contact-form-wrapper fade-in-right">
+                        <form action="https://formsubmit.co/shaheenaneha3@gmail.com" method="POST">
+                            <!-- Optional FormSubmit Settings -->
+                            <input type="hidden" name="_subject" value="New Inquiry from Evara Crafts Website!">
+                            <input type="hidden" name="_captcha" value="false">
+                            
+                            <div class="form-group">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" name="name" class="form-control" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" name="email" class="form-control" placeholder="jane@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone (Optional)</label>
+                                <input type="tel" name="phone" class="form-control" placeholder="+91 ...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What are you looking for?</label>
+                                <select name="category" class="form-control" required>
+                                    <option value="" disabled selected>Select a Category...</option>
+                                    <option value="Custom Portrait">Custom Portrait</option>
+                                    <option value="Personalized Gift">Personalized Gift</option>
+                                    <option value="Wedding & Events">Wedding & Events</option>
+                                    <option value="Calligraphy">Calligraphy</option>
+                                    <option value="Resin Art">Resin Art</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Tell us about your project</label>
+                                <textarea name="message" class="form-control" rows="5" placeholder="I'm looking for..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">Start My Project</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process-section">
+            <div class="container">
+                <span class="section-label">The Journey</span>
+                <h2 class="section-title" style="margin-bottom: 2rem;">How It Works</h2>
+
+                <div class="process-steps-grid">
+                    <div class="process-step fade-in-up">
+                        <span class="step-num-bg">01</span>
+                        <div class="step-content">
+                            <span class="step-number-actual">STEP 01</span>
+                            <h3 class="step-title">Share Your Idea</h3>
+                            <p class="step-desc">Fill out the form with your vision and requirements.</p>
+                        </div>
+                    </div>
+                    <div class="process-step fade-in-up" style="transition-delay: 0.1s;">
+                        <span class="step-num-bg">02</span>
+                        <div class="step-content">
+                            <span class="step-number-actual">STEP 02</span>
+                            <h3 class="step-title">We Connect</h3>
+                            <p class="step-desc">We discuss details, timeline, and pricing.</p>
+                        </div>
+                    </div>
+                    <div class="process-step fade-in-up" style="transition-delay: 0.2s;">
+                        <span class="step-num-bg">03</span>
+                        <div class="step-content">
+                            <span class="step-number-actual">STEP 03</span>
+                            <h3 class="step-title">We Create</h3>
+                            <p class="step-desc">Updates are shared as your piece comes to life.</p>
+                        </div>
+                    </div>
+                    <div class="process-step fade-in-up" style="transition-delay: 0.3s;">
+                        <span class="step-num-bg">04</span>
+                        <div class="step-content">
+                            <span class="step-number-actual">STEP 04</span>
+                            <h3 class="step-title">Delivery</h3>
+                            <p class="step-desc">Your custom creation is packaged and shipped with love.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA (Refined Signature) -->
+        <section class="final-cta" id="contact">
+            <div class="cta-parallax-bg"></div>
+            <div class="cta-overlay-layers"></div>
+            <div class="container text-center">
+                <div class="cta-content-wrapper">
+                    <h2 class="cta-premium-title fade-in-up">Let’s Create Something Meaningful Together</h2>
+                    <p class="cta-subtext-ink fade-in-up">Share your idea, your story, or even a simple thought.<br>We’ll transform it into something timeless.</p>
+                    <div class="cta-premium-divider"></div>
+                    <a href="create-your-piece.html" class="btn-premium-gold shimmer-btn fade-in-up">START YOUR PROJECT</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+                <!-- Column 1: Brand Info -->
+                <div class="footer-brand-info footer-animate">
+                    <div class="logo-group">
+                        <img src="logo-new.png" alt="Evara Crafts Logo" class="header-logo">
+                        <span class="brand-name">Evara Crafts</span>
+                    </div>
+                    <p class="footer-tagline">Turning emotions into timeless art.</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="footer-links footer-animate">
+                    <h3 class="footer-col-title">EXPLORE</h3>
+                    <ul>
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact Info (NEW) -->
+                <div class="footer-contact-info footer-animate" style="animation-delay: 0.16s;">
+                    <h3 class="footer-col-title">CONTACT</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <span class="contact-text">Bengaluru, Karnataka, India</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <a href="tel:+916282556686" class="contact-text">+91 6282556686</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">✉</span>
+                            <a href="mailto:shaheenaneha3@gmail.com" class="contact-text">shaheenaneha3@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 4: Social -->
+                <div class="footer-social-block footer-animate" style="animation-delay: 0.24s;">
+                    <h3 class="footer-col-title">FOLLOW</h3>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="social-icon-link instagram" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.947.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon-link facebook" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon-link pinterest" aria-label="Pinterest">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.168 0 7.41 2.967 7.41 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.592 0 12.017 0z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/916282556686" target="_blank" rel="noopener noreferrer" class="social-icon-link whatsapp" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-divider footer-animate"></div>
+
+            <div class="footer-bottom footer-animate">
+                <p>&copy; 2026 Evara Crafts. All rights reserved.</p>
+                <p class="designed-love">Designed with love for Evara Crafts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>

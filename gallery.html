@@ -1,0 +1,763 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Evara Crafts</title>
+    <meta name="description"
+        content="A premium visual portfolio of handcrafted art, custom gifts, and design by Evara Crafts.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gallery Specific Overrides */
+        .gallery-container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 2rem 0 2rem;
+        }
+
+        .instagram-section {
+            padding: 1rem 0 2rem;
+        }
+
+        /* Premium Filter Bar (Capsule Style) */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            padding: 0.8rem 1.8rem;
+            color: #777;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            font-weight: 500;
+            z-index: 2; /* Above sliding capsule */
+        }
+
+        .filter-btn:hover {
+            color: var(--text-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-btn.active {
+            color: #fff;
+            border-color: transparent;
+        }
+
+        /* Magic Sliding Capsule */
+        .filter-indicator {
+            position: absolute;
+            background-color: var(--accent-color);
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(197, 168, 128, 0.3);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1; /* Behind buttons */
+        }
+
+        /* Robust Grid Layout instead of Columns for stability */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 300px;
+            /* Base row height */
+            gap: 1.5rem;
+            grid-auto-flow: dense;
+            /* Fills gaps */
+        }
+
+        /* Variable Spans to create Masonry feel */
+        .masonry-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .masonry-item.tall {
+            grid-row: span 2;
+        }
+
+        .masonry-item.wide {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .masonry-item.wide {
+                grid-column: span 1;
+            }
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures filling without distortion */
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.08);
+            /* Slow zoom */
+        }
+
+        .item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            pointer-events: none;
+        }
+
+        .masonry-item:hover .item-overlay {
+            opacity: 1;
+        }
+
+        .item-title {
+            color: #fff;
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+            transform: translateY(10px);
+            transition: transform 0.5s ease;
+        }
+
+        .item-category {
+            color: var(--accent-color);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transform: translateY(10px);
+            transition: transform 0.5s ease 0.1s;
+        }
+
+        .masonry-item:hover .item-title,
+        .masonry-item:hover .item-category {
+            transform: translateY(0);
+        }
+
+        /* Hidden state for filtering */
+        .masonry-item.hidden {
+            display: none;
+        }
+
+        /* Lightbox - Same as before */
+        .lightbox-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            font-size: 2rem;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 2002;
+            transition: background 0.3s;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* Artistic Hero CTA */
+        .gallery-artistic-cta {
+            position: relative;
+            height: 55vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: url('https://i.postimg.cc/sgQW4XcQ/Chat-GPT-Image-Mar-18-2026-11-05-34-PM.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin-top: 0;
+            padding: 0;
+        }
+
+        .artistic-cta-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35); /* Soft dark gradient flat color */
+            z-index: 1;
+        }
+
+        .artistic-cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .artistic-cta-title {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            font-weight: 400;
+        }
+
+        .artistic-cta-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .btn-artistic-outline {
+            display: inline-block;
+            border: 1px solid #ffffff;
+            color: #fff;
+            padding: 12px 28px;
+            letter-spacing: 1px;
+            font-size: 14px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .btn-artistic-outline:hover {
+            background: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header site-header-light">
+        <div class="logo">
+            <a href="index.html">
+                <img src="logo-new.png" alt="Evara Crafts Logo" class="header-logo">
+                <span class="brand-name">Evara Crafts</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="gallery.html" class="active" style="border-bottom: 1px solid currentColor;">Gallery</a>
+                </li>
+                <li><a href="philosophy.html">Philosophy</a></li>
+                <li><a href="contact.html" class="btn-nav">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero gallery-header-hero">
+            <div class="hero-bg gallery-hero-bg"></div>
+            <div class="hero-content fade-in-up">
+                <h1 class="hero-title">The Gallery</h1>
+                <p class="hero-subtitle">A curated collection of handcrafted art and creations.</p>
+            </div>
+        </section>
+
+        <div class="gallery-container">
+            <!-- Filter Bar -->
+            <!-- Filter Bar with Indicator -->
+            <div class="filter-bar fade-in-up">
+                <div class="filter-indicator"></div>
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="fine-art">Fine Art</button>
+                <button class="filter-btn" data-filter="calligraphy">Calligraphy</button>
+                <button class="filter-btn" data-filter="frames">Frames</button>
+                <button class="filter-btn" data-filter="gifts">Gifts</button>
+                <button class="filter-btn" data-filter="events">Weddings</button>
+                <button class="filter-btn" data-filter="resin">Resin</button>
+            </div>
+
+            <!-- CSS Grid Masonry (Stable) -->
+            <div class="masonry-grid" id="gallery-grid">
+
+                <!-- Fine Art -->
+                <div class="masonry-item fade-in-up" data-category="fine-art">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-01.jpg" loading="lazy"
+                        alt="Abstract Oil Painting">
+                    <div class="item-overlay">
+                        <div class="item-title">Abstract Oil</div>
+                        <div class="item-category">Fine Art</div>
+                    </div>
+                </div>
+
+                <!-- Calligraphy -->
+                <div class="masonry-item fade-in-up" data-category="calligraphy">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-02.jpg" loading="lazy"
+                        alt="Calligraphy Art">
+                    <div class="item-overlay">
+                        <div class="item-title">Golden Words</div>
+                        <div class="item-category">Calligraphy</div>
+                    </div>
+                </div>
+
+                <!-- Frames -->
+                <div class="masonry-item fade-in-up" data-category="frames">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-03.jpg" loading="lazy"
+                        alt="Minimal Frame">
+                    <div class="item-overlay">
+                        <div class="item-title">Minimalist Memory</div>
+                        <div class="item-category">Frames</div>
+                    </div>
+                </div>
+
+                <!-- Gifts -->
+                <div class="masonry-item fade-in-up" data-category="gifts">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-04.jpg" loading="lazy"
+                        alt="Gift Hamper">
+                    <div class="item-overlay">
+                        <div class="item-title">Luxury Hamper</div>
+                        <div class="item-category">Gifts</div>
+                    </div>
+                </div>
+
+                <!-- Events -->
+                <div class="masonry-item fade-in-up" data-category="events">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-05.jpg" loading="lazy"
+                        alt="Wedding Invite">
+                    <div class="item-overlay">
+                        <div class="item-title">Royal Wedding Suite</div>
+                        <div class="item-category">Events</div>
+                    </div>
+                </div>
+
+                <!-- Resin -->
+                <div class="masonry-item fade-in-up" data-category="resin">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-06.jpg" loading="lazy"
+                        alt="Resin Art">
+                    <div class="item-overlay">
+                        <div class="item-title">Ocean Flow</div>
+                        <div class="item-category">Resin</div>
+                    </div>
+                </div>
+
+                <!-- Fine Art -->
+                <div class="masonry-item fade-in-up" data-category="fine-art">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-07.jpg" loading="lazy"
+                        alt="Portrait Art">
+                    <div class="item-overlay">
+                        <div class="item-title">Soulful Gaze</div>
+                        <div class="item-category">Fine Art</div>
+                    </div>
+                </div>
+
+                <!-- Calligraphy -->
+                <div class="masonry-item fade-in-up" data-category="calligraphy">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-08.jpg" loading="lazy"
+                        alt="Calligraphy Writing">
+                    <div class="item-overlay">
+                        <div class="item-title">Eternal Script</div>
+                        <div class="item-category">Calligraphy</div>
+                    </div>
+                </div>
+
+                <!-- Frames -->
+                <div class="masonry-item fade-in-up" data-category="frames">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-09.jpg" loading="lazy"
+                        alt="Vintage Frame">
+                    <div class="item-overlay">
+                        <div class="item-title">Vintage Border</div>
+                        <div class="item-category">Frames</div>
+                    </div>
+                </div>
+
+                <!-- Gifts -->
+                <div class="masonry-item fade-in-up" data-category="gifts">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-10.png" loading="lazy"
+                        alt="Luxury Gift Hamper">
+                    <div class="item-overlay">
+                        <div class="item-title">Curated Hamper</div>
+                        <div class="item-category">Gifts</div>
+                    </div>
+                </div>
+
+                <!-- Resin -->
+                <div class="masonry-item fade-in-up" data-category="resin">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-11.png" loading="lazy"
+                        alt="Resin Art Tray">
+                    <div class="item-overlay">
+                        <div class="item-title">Floral Resin Decor</div>
+                        <div class="item-category">Resin</div>
+                    </div>
+                </div>
+
+                <!-- Fine Art -->
+                <div class="masonry-item fade-in-up" data-category="fine-art">
+                    <img src="assets/gallery-placeholders/gallery-placeholder-12.png" loading="lazy"
+                        alt="Abstract Textured Art">
+                    <div class="item-overlay">
+                        <div class="item-title">Earthy Textures</div>
+                        <div class="item-category">Fine Art</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Instagram Section -->
+        <section class="instagram-section">
+            <div class="insta-header fade-in-up">
+                <span class="insta-subtitle">Live from the Studio</span>
+                <h2 class="insta-title">
+                    <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-title-link">
+                        <svg viewBox="0 0 24 24" width="28" height="28" class="insta-title-icon">
+                            <path fill="currentColor"
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.947.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                        @evara_crafts_
+                    </a>
+                </h2>
+            </div>
+
+            <div class="insta-grid gallery-mode">
+                <!-- 1 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up">
+                    <img src="assets/gallery-placeholders/insta-placeholder-01.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+                <!-- 2 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up" style="transition-delay: 0.1s;">
+                    <img src="assets/gallery-placeholders/insta-placeholder-02.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+                <!-- 3 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up" style="transition-delay: 0.2s;">
+                    <img src="assets/gallery-placeholders/insta-placeholder-03.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+                <!-- 4 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up" style="transition-delay: 0.3s;">
+                    <img src="assets/gallery-placeholders/insta-placeholder-04.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+                <!-- 5 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up" style="transition-delay: 0.4s;">
+                    <img src="assets/gallery-placeholders/insta-placeholder-05.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+                <!-- 6 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up" style="transition-delay: 0.5s;">
+                    <img src="assets/gallery-placeholders/insta-placeholder-06.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+                <!-- 7 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up" style="transition-delay: 0.6s;">
+                    <img src="assets/gallery-placeholders/insta-placeholder-07.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+                <!-- 8 -->
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="insta-card fade-in-up" style="transition-delay: 0.7s;">
+                    <img src="assets/gallery-placeholders/insta-placeholder-08.jpg" loading="lazy"
+                        class="insta-img" alt="Instagram Post">
+                    <div class="insta-overlay"><span class="insta-icon">IG</span></div>
+                </a>
+            </div>
+
+            <div class="insta-btn-container fade-in-up">
+                <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">Follow on Instagram</a>
+            </div>
+        </section>
+
+        <!-- Artistic Hero CTA -->
+        <section class="gallery-artistic-cta fade-in-up" id="contact">
+            <div class="artistic-cta-overlay"></div>
+            <div class="container text-center">
+                <div class="artistic-cta-content fade-in-up">
+                    <h2 class="artistic-cta-title fade-in-up">Where Memories Become Art</h2>
+                    <p class="artistic-cta-text fade-in-up" style="transition-delay: 0.1s;">Every piece begins with a story — a memory, a celebration, or a quiet emotion. Through thoughtful craftsmanship, these moments are transformed into timeless works of art.</p>
+                    <a href="create-your-piece.html" class="btn-artistic-outline fade-in-up" style="transition-delay: 0.2s;">Commission Your Artwork &rarr;</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox -->
+    <div id="lightbox-modal" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <button class="lightbox-nav-btn prev-btn">&lt;</button>
+        <button class="lightbox-nav-btn next-btn">&gt;</button>
+        <div class="lightbox-content">
+            <img loading="lazy"  id="lightbox-img" src="" alt="Gallery Image">
+            <div class="lightbox-caption">
+                <h3 id="lightbox-title">Title</h3>
+                <p id="lightbox-category">Category</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+                <!-- Column 1: Brand Info -->
+                <div class="footer-brand-info footer-animate">
+                    <div class="logo-group">
+                        <img src="logo-new.png" alt="Evara Crafts Logo" class="header-logo">
+                        <span class="brand-name">Evara Crafts</span>
+                    </div>
+                    <p class="footer-tagline">Turning emotions into timeless art.</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="footer-links footer-animate">
+                    <h3 class="footer-col-title">EXPLORE</h3>
+                    <ul>
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact Info (NEW) -->
+                <div class="footer-contact-info footer-animate" style="animation-delay: 0.16s;">
+                    <h3 class="footer-col-title">CONTACT</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <span class="contact-text">Bengaluru, Karnataka, India</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <a href="tel:+916282556686" class="contact-text">+91 6282556686</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">✉</span>
+                            <a href="mailto:shaheenaneha3@gmail.com" class="contact-text">shaheenaneha3@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 4: Social -->
+                <div class="footer-social-block footer-animate" style="animation-delay: 0.24s;">
+                    <h3 class="footer-col-title">FOLLOW</h3>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/evara_crafts_?igsh=NTh4M2F2am1ycWg5" target="_blank" rel="noopener noreferrer" class="social-icon-link instagram" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.947.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon-link facebook" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon-link pinterest" aria-label="Pinterest">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.168 0 7.41 2.967 7.41 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.592 0 12.017 0z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/916282556686" target="_blank" rel="noopener noreferrer" class="social-icon-link whatsapp" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-divider footer-animate"></div>
+
+            <div class="footer-bottom footer-animate">
+                <p>&copy; 2026 Evara Crafts. All rights reserved.</p>
+                <p class="designed-love">Designed with love for Evara Crafts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.masonry-item');
+
+            // Filter & Magic Line Logic
+            const filterBar = document.querySelector('.filter-bar');
+            const indicator = document.querySelector('.filter-indicator');
+
+            function moveIndicator(element) {
+                const rect = element.getBoundingClientRect();
+                const parentRect = filterBar.getBoundingClientRect();
+
+                indicator.style.width = `${rect.width}px`;
+                indicator.style.height = `${rect.height}px`;
+                indicator.style.left = `${rect.left - parentRect.left}px`;
+                indicator.style.top = `${rect.top - parentRect.top}px`;
+                indicator.style.opacity = '1';
+            }
+
+            // Init Indicator on load
+            const initialActive = document.querySelector('.filter-btn.active');
+            if (initialActive) {
+                // Small delay to ensure layout is ready
+                setTimeout(() => moveIndicator(initialActive), 100);
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    moveIndicator(btn); // Move line
+
+                    const filter = btn.getAttribute('data-filter');
+
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.classList.remove('hidden');
+                            item.style.animation = 'none';
+                            item.offsetHeight; /* reflow */
+                            item.style.animation = 'fadeInUp 0.8s ease forwards';
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Update line on resize
+            window.addEventListener('resize', () => {
+                const active = document.querySelector('.filter-btn.active');
+                if (active) moveIndicator(active);
+            });
+
+            // Lightbox
+            const lightbox = document.getElementById('lightbox-modal');
+            const lbImg = document.getElementById('lightbox-img');
+            const lbTitle = document.getElementById('lightbox-title');
+            const lbCat = document.getElementById('lightbox-category');
+            const closeBtn = document.querySelector('.close-lightbox');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+
+            let visibleItems = [];
+            let currentIndex = 0;
+
+            function updateVisibleItems() {
+                visibleItems = Array.from(galleryItems).filter(item => !item.classList.contains('hidden'));
+            }
+
+            function openLightbox(index) {
+                updateVisibleItems();
+                if (visibleItems.length === 0) return;
+
+                currentIndex = index;
+                const item = visibleItems[currentIndex];
+                const img = item.querySelector('img');
+                const title = item.querySelector('.item-title').innerText;
+                const category = item.querySelector('.item-category').innerText;
+
+                lbImg.src = img.src;
+                lbTitle.innerText = title;
+                lbCat.innerText = category;
+                lightbox.classList.add('active');
+            }
+
+            function showNext() {
+                updateVisibleItems();
+                currentIndex = (currentIndex + 1) % visibleItems.length;
+                openLightbox(currentIndex);
+            }
+
+            function showPrev() {
+                updateVisibleItems();
+                currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+                openLightbox(currentIndex);
+            }
+
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    updateVisibleItems();
+                    const index = visibleItems.indexOf(item);
+                    if (index !== -1) openLightbox(index);
+                });
+            });
+
+            closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+            nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+            prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') lightbox.classList.remove('active');
+                if (e.key === 'ArrowRight') showNext();
+                if (e.key === 'ArrowLeft') showPrev();
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) lightbox.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
