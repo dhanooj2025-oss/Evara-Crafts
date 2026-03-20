@@ -54,6 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
             mainNav.classList.toggle('active');
             mobileMenuToggle.classList.toggle('open');
         });
+
+        // Close menu when clicking a link
+        const navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuToggle.classList.remove('open');
+            });
+        });
     }
 
     // Final CTA Parallax Effect
